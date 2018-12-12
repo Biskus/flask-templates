@@ -44,6 +44,10 @@ info = {
 def send_static(path):
     return send_from_directory('static', path)
 
+@app.route("/")
+def redir_home():
+    return redirect("/home")
+
 @app.route("/home")
 def home():
     return render_template('home.html',info=info)
