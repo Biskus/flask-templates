@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="content-section">
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Opprett ny bruker</legend>
+        <dir class="form-group">
+          {{ form.username.label(class="form-control-label")}}
+
+          {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg")}}
+
+            <div class="invalid-feedback">
+              {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.username(class="form-control form-control-lg")}}
+          {% endif %}
+
+        </dir>
+        <dir class="form-group">
+          {{ form.email.label(class="form-control-label")}}
+          {{ form.email(class="form-control form-control-lg")}}
+        </dir>
+        <dir class="form-group">
+          {{ form.password.label(class="form-control-label")}}
+          {{ form.password(class="form-control form-control-lg")}}
+        </dir>
+        <dir class="form-group">
+          {{ form.confirm_password.label(class="form-control-label")}}
+          {% if form.confirm_password.errors %}
+            {{ form.confirm_password(class="form-control form-control-lg")}}
+
+            <div class="invalid-feedback">
+              {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.confirm_password(class="form-control form-control-lg")}}
+          {% endif %}
+          
+        </dir>
+      </fieldset>
+      <div class="form-group">
+        {{form.submit(class="btn btn-outline-info")}}
+      </div>
+    </form>
+    <div class="border-top pt-3">
+      <small class="text-muted">
+        <a href="{{url_for('login')}}">
+        Har du allerede en konto? Klikk her for å logge inn
+        </a>
+      </small>
+    </div>
+  </div>
+{% endblock content %}

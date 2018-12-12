@@ -1,0 +1,21 @@
+.container{
+
+  padding-top:3%;
+  /*margin-top:20%;*/
+}
+
+img.frontpage{
+  /*max-width:50%;*/
+  display:block;
+  margin: 0 auto;
+  max-width:40%;
+}
+
+.content-section{
+  padding-top:5%;
+}
+/*
+body{
+  background-image:url("/static/img/amazon-networking-logo-transparent.png");
+}
+*/
