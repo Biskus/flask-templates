@@ -28,3 +28,32 @@ class LoginForm(FlaskForm):
 
 
     submit = SubmitField('Logg inn')
+
+class ContactForm(FlaskForm):
+    name = StringField('Navn',
+        validators = [DataRequired()])
+    email = StringField('Epost',
+        validators = [DataRequired(),Email()])
+    inquiry = StringField('Henvendelse',
+                          validators=[DataRequired(),Length(max=200)])
+    submit = SubmitField('Send')
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

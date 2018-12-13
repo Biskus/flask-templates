@@ -42,6 +42,12 @@
           <li class="nav-item {% if info.current_tab == "users" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('users') }}">Brukere</a>
           </li>
+          <li class="nav-item {% if info.current_tab == "contact" %} active {% endif %}">
+            <a class="nav-link" href="{{ url_for('contact') }}">Kontakt oss</a>
+          </li>
+          <li class="nav-item {% if info.current_tab == "inquiries" %} active {% endif %}">
+            <a class="nav-link" href="{{ url_for('inquiries') }}">Hendvendelser</a>
+          </li>
         </ul>
         <ul class="navbar-nav mr-right">
           {% if current_user.is_authenticated %}
@@ -103,8 +109,11 @@
               {% endfor %}
             {% endif %}
           {% endwith %}
+          
+          <!-- Her kommer all koden du jobber med -->
           {% block content %}
           {% endblock content %}
+          
           <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
               <div class="col-12 col-md">

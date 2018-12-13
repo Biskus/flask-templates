@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, UserMixin
 from flask_login import current_user, login_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, ContactForm
 
 app = Flask(__name__,
     template_folder="templates")
@@ -53,6 +53,14 @@ class Post(db.Model):
     def __repr__(self):
         return self.title
 
+class Inquiry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email  = db.Column(db.String(120), nullable=False)
+    name  = db.Column(db.String(120), nullable=False)
+    inquiry  = db.Column(db.String(200), nullable=False)
+    
+
+
 # Serving static files like JS, CSS and images
 @app.route('/static/<path:path>')
 def send_static(path):
@@ -66,6 +74,30 @@ def redir_home():
 def home():
     info['current_tab'] = 'home'
     return render_template('home.html',info=info)
+
+@app.route("/contact", methods=['GET','POST'])
+def contact():
+    info['current_tab'] = 'contact'
+    form = ContactForm()
+    if request.method == "POST" and form.validate():
+        i = Inquiry(
+            email=form.email.data,
+            inquiry = form.inquiry.data,
+            name = form.name.data,
+                    )
+        db.session.add(i)
+        db.session.commit()
+        flash("Takk for din henvendelse!",category="success")
+    elif request.method == "POST" and not form.validate():
+        flash("Pass på at du har fylt ut kontaktskjemaet riktig.", category="warning")
+    return render_template('contact.html',form=form,info=info)
+
+@app.route("/hendvendelser")
+def inquiries():
+    info['current_tab'] = 'inquiries'
+    return render_template('inquiries.html',
+                           info=info,
+                           inquiries=Inquiry.query.all())
 
 @app.route("/products")
 def products():
@@ -88,7 +120,7 @@ def register():
         return redirect(url_for('home'))
     info['current_tab'] = 'register'
     form = RegistrationForm()
-    #if form.validate_on_submit():
+    
     if request.method == 'POST' and form.validate():
         if len(User.query.filter_by(username=form.username.data).all()) > 0:
             flash('Username already exists, please pick another one.',

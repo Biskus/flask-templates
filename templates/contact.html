@@ -1,0 +1,68 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+<h1 class="display-4">Kontakt {{info.company_name}}</h1>
+<p class="lead">Her kan du kontakte oss så svarer vi så fort vi kan :)</p>
+</div>
+<div class="content-section">
+    <form method="POST">
+      {{form.hidden_tag()}}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Kontakt oss</legend>
+        <!-- Begin username -->
+        <dir class="form-group">
+          {{ form.name.label(class="form-control-label")}}
+          {% if form.name.errors %}if
+            {{ form.name(class="form-control form-control-lg")}}
+            <div class="feedback">
+              {% for error in form.name.errors %}
+                <span class="">{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.name(class="form-control form-control-lg")}}
+          {% endif %}
+        </dir>
+        <!-- End username -->
+       <!-- Begin email -->
+        <dir class="form-group">
+          {{ form.email.label(class="form-control-label")}}
+          {% if form.email.errors %}if
+            {{ form.email(class="form-control form-control-lg")}}
+            <div class="feedback">
+              {% for error in form.email.errors %}
+                <span class="">{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.email(class="form-control form-control-lg")}}
+          {% endif %}
+        </dir>
+        <!-- End email -->
+        
+        <!-- Begin confirm password -->
+        <dir class="form-group">
+          {{ form.inquiry.label(class="form-control-label")}}
+          {% if form.inquiry.errors %}
+            {{ form.inquiry(class="form-control form-control-lg")}}
+            <div class="feedback">
+              {% for error in form.inquiry.errors %}
+                <span class="">{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.inquiry(class="form-control form-control-lg")}}
+          {% endif %}
+        <!-- End confirm password -->
+          
+        </dir>
+      </fieldset>
+      <div class="form-group">
+        {{form.submit(class="btn btn-outline-info")}}
+      </div>
+    </form>
+  </div>
+
+{% endblock content %}

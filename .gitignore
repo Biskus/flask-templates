@@ -1,2 +1,4 @@
 .pyw
 __pycache__/
+__env__/*
+.tcl

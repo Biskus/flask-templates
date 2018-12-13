@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4">Hendvendelser</h1>
+	<p class="lead">{{info.company_name}} sine hendvendelser.</p>
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+	      <th scope="col">#</th>
+	      <th scope="col">Navn</th>
+	      <th scope="col">Email</th>
+	      <th scope="col">Hendvendelse</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{% for i in inquiries %}
+			<tr>
+				<td>
+					{{i.id}}
+				</td>
+				<td>
+					{{i.name}}
+				</td>
+				<td>
+					{{i.email}}
+				</td>
+				<td>
+					{{i.inquiry}}
+				</td>
+			</tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+</div>
+
+
+{% endblock content %}
