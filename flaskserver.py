@@ -10,6 +10,10 @@ app = Flask(__name__,
     template_folder="templates")
 app.config['SECRET_KEY'] = '1cc7a427c58c3837322687b7ff4ee836'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+info = {
+'company_name': 'Bedrift AS',
+'current_tab' : 'home',
+}
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -40,9 +44,7 @@ class Post(db.Model):
         nullable=False,)
     def __repr__(self):
         return self.title
-info = {
-'company_name': 'Bedrift AS',
-}
+
 
 #Serving static files like JS and CSS
 @app.route('/static/<path:path>')
@@ -55,22 +57,27 @@ def redir_home():
 
 @app.route("/home")
 def home():
+    info['current_tab'] = 'home'
     return render_template('home.html',info=info)
 
 @app.route("/products")
 def products():
+    info['current_tab'] = 'products'
     return render_template('products.html',info=info)
 
 @app.route("/aboutus")
 def about_us():
+    info['current_tab'] = 'about_us'
     return render_template('about_us.html',info=info)
 
 @app.route("/users")
 def users():
+    info['current_tab'] = 'users'
     return render_template('users.html',info=info, users=User.query.all())
 
 @app.route("/register", methods=['GET','POST'])
 def register():
+    info['current_tab'] = 'register'
     form = RegistrationForm()
     #if form.validate_on_submit():
     if request.method == 'POST' and form.validate():
@@ -112,12 +119,11 @@ def register():
 
 @app.route("/login", methods=['GET','POST'])
 def login():
+    info['current_tab'] = 'login'
     form = LoginForm()
     
     if request.method == 'POST' and form.validate():
         user = User.query.filter_by(email=form.email.data).first()
-        print (user)
-        print (type(user))
         hashedpw = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         if not user:
@@ -127,7 +133,7 @@ def login():
                 form = form,
                 info = info)
         else:
-            print(f"Checking login {user.password} vs {form.password.data} aka {hashedpw}")
+            #print(f"Checking login {user.password} vs {form.password.data} aka {hashedpw}")
             if bcrypt.check_password_hash(user.password, form.password.data):
                 flash(f'Vellykket tilbake {user.username}!',
                       category='success')
