@@ -104,7 +104,6 @@ def register():
                 title="Register",
                 form = form,
                 info = info)
-        
         u = User(
             username = form.username.data,
             email = form.email.data,
@@ -115,6 +114,7 @@ def register():
         db.session.commit()
         flash(f'Konto opprettet for {form.username.data}!',
               category="success")
+        login_user(u)
         return redirect(url_for('home'))
     elif request.method == 'POST' and not form.validate():
         flash(f'Ugyldig data, sjekk feil under',
@@ -144,7 +144,6 @@ def login():
                 form = form,
                 info = info)
         elif user:
-            #print(f"Checking login {user.password} vs {form.password.data} aka {hashedpw}")
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user,remember=form.remember.data)
                 flash(f'Velkommen tilbake {user.username}!',
