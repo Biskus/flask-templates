@@ -3,6 +3,8 @@ from flask import Flask, flash, url_for
 from flask import render_template, redirect, request
 from flask import send_from_directory
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin
+from flask_login import current_user, login_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 
@@ -17,7 +19,13 @@ info = {
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-class User(db.Model):
+login_manager = LoginManager(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email  = db.Column(db.String(120), unique=True, nullable=False)
@@ -77,6 +85,8 @@ def users():
 
 @app.route("/register", methods=['GET','POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     info['current_tab'] = 'register'
     form = RegistrationForm()
     #if form.validate_on_submit():
@@ -119,6 +129,8 @@ def register():
 
 @app.route("/login", methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))    
     info['current_tab'] = 'login'
     form = LoginForm()
     
@@ -132,17 +144,22 @@ def login():
                 title="Login",
                 form = form,
                 info = info)
-        else:
+        elif user:
             #print(f"Checking login {user.password} vs {form.password.data} aka {hashedpw}")
             if bcrypt.check_password_hash(user.password, form.password.data):
-                flash(f'Vellykket tilbake {user.username}!',
+                login_user(user,remember=form.remember.data)
+                flash(f'Velkommen tilbake {user.username}!',
                       category='success')
+                return redirect(url_for('home'))
     return render_template('login.html',
         title="Login",
         form = form,
         info = info)
 
-
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 
 

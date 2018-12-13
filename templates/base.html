@@ -42,12 +42,22 @@
           <li class="nav-item {% if info.current_tab == "users" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('users') }}">Brukere</a>
           </li>
-          <li class="nav-item {% if info.current_tab == "login" %} active {% endif %}">
-            <a class="nav-link" href="{{ url_for('login') }}">Logg inn</a>
+        </ul>
+        <ul class="navbar-nav mr-right">
+          {% if current_user.is_authenticated %}
+          <li class="nav-item {% if info.current_tab == "logout" %} active {% endif %}">
+            <a class="nav-link" href="{{ url_for('logout') }}">Logg ut</a>
           </li>
+          {% else %}
           <li class="nav-item {% if info.current_tab == "register" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('register') }}">Ny bruker</a>
           </li>
+          <li class="nav-item {% if info.current_tab == "login" %} active {% endif %}">
+            <a class="nav-link" href="{{ url_for('login') }}">Logg inn</a>
+          </li>
+          {% endif %}
+        </ul>
+        	
           <!--
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Disabled</a>
@@ -63,7 +73,6 @@
             </div>
           </li>
         -->
-        </ul>
         <!--
 
         <form class="form-inline my-2 my-lg-0">
