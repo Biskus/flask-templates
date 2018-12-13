@@ -1,5 +1,6 @@
 crypto==1.4.1
 Flask==1.0.2
+Flask-Bcrypt==0.7.1
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 Jinja2==2.10
