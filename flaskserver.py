@@ -38,7 +38,6 @@ class User(db.Model, UserMixin):
     def validate_password(self, password):
         return bcrypt.verify(password, self.password)
     
-
     def __repr__(self):
         return self.username
 
@@ -50,11 +49,11 @@ class Post(db.Model):
     user_id = db.Column(db.Integer,
         db.ForeignKey('user.id'),
         nullable=False,)
+    
     def __repr__(self):
         return self.title
 
-
-#Serving static files like JS and CSS
+# Serving static files like JS, CSS and images
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
@@ -175,12 +174,3 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
-"""
-@app.route("/base")
-def base():
-    return render_template('base.html')
-"""
