@@ -48,6 +48,9 @@
           <li class="nav-item {% if info.current_tab == "inquiries" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('inquiries') }}">Hendvendelser</a>
           </li>
+          <li class="nav-item {% if info.current_tab == "oppgave1" %} active {% endif %}">
+            <a class="nav-link" href="{{ url_for('oppgave1') }}">Oppgave 1</a>
+          </li>
         </ul>
         <ul class="navbar-nav mr-right">
           {% if current_user.is_authenticated %}
@@ -61,6 +64,7 @@
           <li class="nav-item {% if info.current_tab == "login" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('login') }}">Logg inn</a>
           </li>
+          
           {% endif %}
         </ul>
         	

@@ -8,6 +8,7 @@ from flask_login import LoginManager, UserMixin
 from flask_login import current_user, login_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm, ContactForm
+from operator import itemgetter
 
 """ Setting up Flask """
 app = Flask(__name__, template_folder="templates")
@@ -56,6 +57,38 @@ class Inquiry(db.Model):
     inquiry  = db.Column(db.String(200), nullable=False)
     
 
+"""Oppgave 1: Lag en tabell som viser oversikt over elevene sortert etter karakter"""
+
+students = [
+    ("Mahad",43,"Fisk", 4, "IKT VG3"),
+    ("Aaron", 20, "Koscher", 3, "IKT VG3"),
+    ("Syed", 19, "Pommes frites", 3, "IKT VG3"),
+    ("Hussain", 19, "Ketchup", 3, "IKT VG3"),
+    ("Janus", 20, "Kylling", 2, "IKT VG3"),
+    ("Helge", 29, "Fårikål", 4, "Dataelektronikk VG3"),
+    ("Fredrik", 18, "Grandiosa", 3, "IKT VG3"),
+    ("Finnvald", 19, "Ribbe", 3, "Dataelektronikk VG3"),
+    ("Jan", 20, "Polsk nasjonalrett", 5, "IKT VG3"),
+    ("Calvin", 20, "Kebab", 3, "IKT VG3"),
+    ("Yassir", 58, "Jordbær", 3, "Dataelektronikk VG3"),
+    ("Janne", 25, "Soya", 1, "IKT VG3"),
+    ("Keith", 18, "Red bull", 5,"IKT VG3"),
+    ("Rikke", 25, "Cola", 3, "IKT VG3"),
+    ("Jodne", 19, "Elgkjøtt", 4, "IKT VG3"),
+    ("Olav", 25, "Pinnekjøtt", 2, "IKT VG3"),
+    ("Nina", 21, "Sitron", 4, "Dataelektronikk VG3"),
+    ("Stig-Arild", 24, "Dressing", 4, "Dataelektronikk VG3"),
+    ("Tobias", 24, "Brus", 6, "Dataelektronikk VG3"),
+    ("Tuva", 20, "Syltelabb", 2, "Dataelektronikk VG3"),
+    ]
+
+@app.route('/oppgave1')
+def oppgave1():
+    info['current_tab'] = 'oppgave1'
+    return render_template('oppgave1.html',
+                           info = info, #passing info-list to the template
+                           students = students, #passing students-list to the template
+                           )
 
 """ Home / Forside """
 @app.route("/home")

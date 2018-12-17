@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+	<h1 class="display-4">Oppgave for {{info.company_name}}</h1>
+	<p class="lead">Velkommen til oppgave 1.<br>
+	Dette er en oversikt over studenters navn, alder, favorittmat, karakter og klasse.
+	Du skal lage en html-tabell som viser oversikt over elevene sortert etter karakter.<br>
+	Hvis karakteren er 5 eller over skal raden være grønn, 
+	hvis karakteren er 3 skal raden være gul,<br>
+	hvis karakteren er 2 eller under skal raden være rød.<br>
+	<a href="http://jinja.pocoo.org/docs/2.10/templates/">Her</a> er dokumentasjon til template-språket<br>
+	<a href="https://getbootstrap.com/docs/4.0/content/tables/">Her</a> er dokumentasjon til bootstrap<br>
+	Lykke til.
+	</p>
+</div>
+
+{% for student in students %}
+	{{student.0}} - {{student.1}} - {{student.2}} - {{student.3}} - {{student.4}} <br>
+{% endfor %}
+
+{% endblock content %}
